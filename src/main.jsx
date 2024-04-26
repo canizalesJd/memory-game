@@ -8,5 +8,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <div className="min-h-screen w-full bg-zinc-950 text-gray-200">
       <App />
     </div>
-  </React.StrictMode>,
+  </React.StrictMode>
 )
