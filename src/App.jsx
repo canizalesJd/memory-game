@@ -7,8 +7,8 @@ import React from 'react'
 import useEmojisFetch from './hooks/useEmojisFetch'
 import useGameState from './hooks/useGameState'
 
-const apiUrl = process.env.VITE_API_URL
-const apiKey = process.env.API_KEY
+const apiUrl = import.meta.env.VITE_API_URL
+const apiKey = import.meta.env.VITE_API_KEY
 const emojisAmount = 12
 
 export default function App () {
