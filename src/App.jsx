@@ -1,5 +1,6 @@
 import Header from './components/Header'
 import Spinner from './components/Spinner'
+import Footer from './components/Footer'
 import React, { useState, useEffect } from 'react'
 
 const apiUrl = import.meta.env.VITE_API_URL
@@ -80,7 +81,7 @@ export default function App () {
   }
 
   return (
-    <div className="container mx-auto">
+    <div className="flex flex-col min-h-screen container mx-auto justify-between">
       <Header />
       <div id="game" className="min-h-[400px] max-w-xl mx-auto flex flex-col">
         {!loading && (
@@ -123,6 +124,7 @@ export default function App () {
           )}
         </div>
       </div>
+      <Footer />
     </div>
   )
 }
