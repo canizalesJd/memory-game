@@ -1,8 +1,10 @@
+import Header from './components/Header'
 import Spinner from './components/Spinner'
 import React, { useState, useEffect } from 'react'
 
 const apiUrl = import.meta.env.VITE_API_URL
 const apiKey = import.meta.env.VITE_API_KEY
+// To do: add a difficulty selector to change this size
 const emojisAmount = 12
 
 export default function App () {
@@ -25,9 +27,11 @@ export default function App () {
 
   // get random emojis from the complete API result
   const getEmojiList = () => {
+    setEmojiList([])
     for (let i = 0; i < emojisAmount; i++) {
       const randomIndex = Math.floor(Math.random() * emojis.length)
       const emoji = emojis[randomIndex]
+      // Flags aren't rendered nicely, so we remove them from the list
       if (emoji.slug.includes('flag')) {
         i--
         continue
@@ -53,9 +57,11 @@ export default function App () {
 
   // update emojiHistory when score changes
   const handleCardClick = (id) => {
+    // if clicked twice on the same emoji, reset the game
     if (emojiHistory.includes(id)) {
       setScore(0)
       setEmojiHistory([])
+      getEmojiList()
       shuffle(emojiList)
       return
     }
@@ -75,12 +81,7 @@ export default function App () {
 
   return (
     <div className="container mx-auto">
-      <div className="p-7 flex items-center gap-4 flex-col">
-        <h1 className="text-3xl font-bold">🗿 Memoji</h1>
-        <p className="ml-2 text-lg text-gray-400">
-          Don&apos;t click on the same emoji twice
-        </p>
-      </div>
+      <Header/>
       <div id="game" className="min-h-[400px] max-w-xl mx-auto flex flex-col">
         <div className="h-[100px] pl-5 pt-5">
           {!loading && (
@@ -108,7 +109,7 @@ export default function App () {
                 >
                   <div
                     key={index}
-                    className="card flex-1 h-40 rounded-xl bg-zinc-900  cursor-pointer hover:bg-zinc-800"
+                    className="card flex-1 h-40 rounded-xl bg-zinc-900  cursor-pointer hover:bg-zinc-800 shadow-md"
                   >
                     <div className="card-body flex flex-col h-full p-5 justify-center items-center">
                       <span className="card-title flex w-full flex-1 justify-center items-center text-6xl">
