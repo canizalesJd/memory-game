@@ -81,25 +81,23 @@ export default function App () {
 
   return (
     <div className="container mx-auto">
-      <Header/>
+      <Header />
       <div id="game" className="min-h-[400px] max-w-xl mx-auto flex flex-col">
-        <div className="h-[100px] pl-5 pt-5">
-          {!loading && (
-            <div>
-              <p className="text-lg">
-                <span className="font-semibold">Score:</span>
-                {' ' + score}
-              </p>
-              <p className="text-lg">
-                <span className="font-semibold">Best Score:</span>
-                {' ' + bestScore}
-              </p>
-            </div>
-          )}
-        </div>
+        {!loading && (
+          <div className="h-[100px] pl-5 pt-5 animate-fade-in-down">
+            <p className="text-lg">
+              <span className="font-semibold">Score:</span>
+              {' ' + score}
+            </p>
+            <p className="text-lg">
+              <span className="font-semibold">Best Score:</span>
+              {' ' + bestScore}
+            </p>
+          </div>
+        )}
         <div className="game-board flex-1 p-5 mt-5">
           {!loading && emojiList && emojiList.length > 0 ? (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-5 justify-center">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-5 justify-center animate-fade-in-up">
               {emojiList.map((emoji, index) => (
                 <button
                   key={index}
@@ -121,7 +119,7 @@ export default function App () {
               ))}
             </div>
           ) : (
-            <Spinner/>
+            <Spinner />
           )}
         </div>
       </div>
