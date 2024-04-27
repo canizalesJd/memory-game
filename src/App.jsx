@@ -64,11 +64,25 @@ export default function App () {
       setEmojiHistory([])
       getEmojiList()
       shuffle(emojiList)
+      flipCards()
       return
     }
     setEmojiHistory((emojiHistory) => [...emojiHistory, id])
     setScore((score) => score + 1)
     shuffle(emojiList)
+    flipCards()
+  }
+
+  const flipCards = () => {
+    const cards = document.querySelectorAll('.card')
+    cards.forEach((card) => {
+      card.classList.add('animate-flip-x')
+    })
+    setTimeout(() => {
+      cards.forEach((card) => {
+        card.classList.remove('animate-flip-x')
+      })
+    }, 600)
   }
 
   // shuffle emojiList
