@@ -22,6 +22,7 @@ module.exports = {
   },
   plugins: ['react'],
   rules: {
-    'multiline-ternary': 'off'
+    'multiline-ternary': 'off',
+    'react/prop-types': 'off'
   }
 }

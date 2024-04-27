@@ -1,6 +1,8 @@
 import Header from './components/Header'
 import Spinner from './components/Spinner'
+import Scores from './components/Scores'
 import Footer from './components/Footer'
+import Card from './components/Card'
 import React, { useState, useEffect } from 'react'
 
 const apiUrl = import.meta.env.VITE_API_URL
@@ -98,39 +100,12 @@ export default function App () {
     <div className="flex flex-col min-h-screen container mx-auto justify-between">
       <Header />
       <div id="game" className="min-h-[400px] max-w-xl mx-auto flex flex-col">
-        {!loading && (
-          <div className="h-[100px] pl-5 pt-5 animate-fade-in-down">
-            <p className="text-lg">
-              <span className="font-semibold">Score:</span>
-              {' ' + score}
-            </p>
-            <p className="text-lg">
-              <span className="font-semibold">Best Score:</span>
-              {' ' + bestScore}
-            </p>
-          </div>
-        )}
+        {!loading && <Scores bestScore={bestScore} score={score} />}
         <div className="game-board flex-1 p-5 mt-5">
           {!loading && emojiList && emojiList.length > 0 ? (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-5 justify-center animate-fade-in-up">
               {emojiList.map((emoji, index) => (
-                <button
-                  key={index}
-                  onClick={() => {
-                    handleCardClick(emoji.slug)
-                  }}
-                >
-                  <div
-                    key={index}
-                    className="card flex-1 h-40 rounded-xl bg-zinc-900  cursor-pointer hover:bg-zinc-800 shadow-md"
-                  >
-                    <div className="card-body flex flex-col h-full p-5 justify-center items-center">
-                      <span className="card-title flex w-full flex-1 justify-center items-center text-6xl">
-                        {emoji.character}
-                      </span>
-                    </div>
-                  </div>
-                </button>
+              <Card key={index} emoji={ emoji } handleCardClick={handleCardClick}/>
               ))}
             </div>
           ) : (
