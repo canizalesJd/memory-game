@@ -21,9 +21,9 @@ export default function App () {
       <Header />
       <div id="game" className="min-h-[400px] max-w-xl mx-auto flex flex-col">
         {!loading && <Scores bestScore={bestScore} score={score} />}
-        <div className="game-board flex-1 p-5 mt-5">
+        <div className="game-board flex-1 p-5">
           {!loading && emojiList && emojiList.length > 0 ? (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-5 justify-center animate-fade-in-up">
+            <div className="grid grid-cols-3 md:grid-cols-4 gap-5 justify-center animate-fade-in-up">
               {emojiList.map((emoji, index) => (
                 <Card
                   key={index}
