@@ -5,6 +5,7 @@ import DIFFICULTY from '../utils/constants'
 const useGameState = (emojis) => {
   const [emojiList, setEmojiList] = useState([])
   const [score, setScore] = useState(0)
+  const [counter, setCounter] = useState(0)
   const [bestScore, setBestScore] = useState(0)
   const [emojiHistory, setEmojiHistory] = useState([])
   const [difficulty, setDifficulty] = useState('MEDIUM')
@@ -21,12 +22,10 @@ const useGameState = (emojis) => {
     if (score > bestScore) {
       setBestScore(score)
     }
-    // reset game if max score is reached
-    if (score === emojisAmount) {
-      setScore(0)
-      setEmojiHistory([])
+    // get new emojis when counter is equal to the amount of emojis
+    if (counter === emojisAmount) {
       getEmojiList()
-      shuffleArray(emojiList)
+      setCounter(0)
     }
   }, [score, bestScore])
 
@@ -47,6 +46,7 @@ const useGameState = (emojis) => {
   const handleCardClick = (id) => {
     if (emojiHistory.includes(id)) {
       setScore(0)
+      setCounter(0)
       setEmojiHistory([])
       getEmojiList()
       shuffleArray(emojiList)
@@ -55,6 +55,7 @@ const useGameState = (emojis) => {
     }
     setEmojiHistory((emojiHistory) => [...emojiHistory, id])
     setScore((score) => score + 1)
+    setCounter((counter) => counter + 1)
     shuffleArray(emojiList)
     flipCards()
   }
