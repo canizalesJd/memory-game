@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react'
 import shuffleArray from '../utils/shuffleArray'
+import DIFFICULTY from '../utils/constants'
 
-const useGameState = (emojis, emojisAmount) => {
+const useGameState = (emojis) => {
   const [emojiList, setEmojiList] = useState([])
   const [score, setScore] = useState(0)
   const [bestScore, setBestScore] = useState(0)
   const [emojiHistory, setEmojiHistory] = useState([])
+  const [difficulty, setDifficulty] = useState('MEDIUM')
+  const emojisAmount = DIFFICULTY[difficulty]
+  const [currentMenu, setCurrentMenu] = useState('START')
 
   useEffect(() => {
     if (emojis && emojiList.length < emojisAmount) {
@@ -16,6 +20,13 @@ const useGameState = (emojis, emojisAmount) => {
   useEffect(() => {
     if (score > bestScore) {
       setBestScore(score)
+    }
+    // reset game if max score is reached
+    if (score === emojisAmount) {
+      setScore(0)
+      setEmojiHistory([])
+      getEmojiList()
+      shuffleArray(emojiList)
     }
   }, [score, bestScore])
 
@@ -48,6 +59,11 @@ const useGameState = (emojis, emojisAmount) => {
     flipCards()
   }
 
+  const handleSelectDifficulty = (e) => {
+    setDifficulty(e.target.innerHTML.toUpperCase())
+    setCurrentMenu('GAME')
+  }
+
   const flipCards = () => {
     const cards = document.querySelectorAll('.card')
     cards.forEach((card) => {
@@ -60,7 +76,15 @@ const useGameState = (emojis, emojisAmount) => {
     }, 600)
   }
 
-  return { emojiList, score, bestScore, emojiHistory, handleCardClick }
+  return {
+    emojiList,
+    score,
+    bestScore,
+    emojiHistory,
+    handleCardClick,
+    handleSelectDifficulty,
+    currentMenu
+  }
 }
 
 export default useGameState

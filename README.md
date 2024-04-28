@@ -27,14 +27,17 @@ To run the game locally, follow these steps:
 1. Clone this repository: `git clone git@github.com:canizalesJd/memory-game.git`
 2. Navigate to the project directory: `cd memory-game`
 3. Create a .env file and add your API url and key:
+
 ```
 VITE_API_URL=https://emoji-api.com/emojis?access_key=
 VITE_API_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ```
+
 - You can get your API key at [Open Emoji API](https://emoji-api.com/).
+
 4. Run `npm install` && `npm run dev` and open `http://localhost:5173/`
 
-Alternatively, you can play the game online by visiting [the live demo]([https://your-username.github.io/memoji/](https://memory-game-ruddy-nine.vercel.app/)]).
+Alternatively, you can play the game online by visiting [the live demo](<[https://your-username.github.io/memoji/](https://memory-game-ruddy-nine.vercel.app/)]>).
 
 ## Contributing
 
