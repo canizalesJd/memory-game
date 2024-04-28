@@ -12,8 +12,15 @@ const apiKey = import.meta.env.VITE_API_KEY
 
 export default function App () {
   const { emojis, loading } = useEmojisFetch(apiUrl, apiKey)
-  const { emojiList, score, bestScore, handleCardClick, handleSelectDifficulty, currentMenu } =
-    useGameState(emojis)
+  const {
+    emojiList,
+    score,
+    bestScore,
+    handleCardClick,
+    handleSelectDifficulty,
+    handleChangeMenu,
+    currentMenu
+  } = useGameState(emojis)
 
   return (
     <div className="flex flex-col min-h-screen container mx-auto justify-between">
@@ -32,7 +39,9 @@ export default function App () {
                     {!loading && emojiList && emojiList.length > 0 ? (
                       <div
                         className={`grid grid-cols-3 ${
-                          emojiList.length === 12 ? 'md:grid-cols-4' : 'md:grid-cols-3'
+                          emojiList.length === 12
+                            ? 'md:grid-cols-4'
+                            : 'md:grid-cols-3'
                         } gap-5 justify-center animate-fade-in-up`}
                       >
                         {emojiList.map((emoji, index) => (
@@ -53,16 +62,33 @@ export default function App () {
             case 'GAME-OVER':
               return (
                 <div className="flex-1 flex flex-col items-center justify-center">
-                  <h1 className="text-2xl font-bold mb-4">Game Over</h1>
-                  <button
-                    className="bg-indigo-600 hover:bg-indigo-800 text-white font-bold py-2 px-4 rounded"
-                    onClick={handleCardClick}
-                  >
-                    Play Again
-                  </button>
+                  <h2 className="text-4xl font-bold mb-4">Game Over</h2>
+                  <Scores
+                    bestScore={bestScore}
+                    score={score}
+                    className={'w-full text-center'}
+                  />
+                  <div className="flex w-full items-center justify-center gap-5">
+                    <button
+                      className="bg-indigo-600 hover:bg-indigo-800 text-white font-bold py-2 px-4 rounded"
+                      onClick={() => {
+                        handleChangeMenu('GAME')
+                      }}
+                    >
+                      Play Again
+                    </button>
+                     <button
+                      className="border-solid border-2 border-indigo-600 hover:border-indigo-800 bg-transparent text-white font-bold py-[0.4rem] px-4 rounded"
+                      onClick={() => {
+                        handleChangeMenu('DIFFICULTY')
+                      }}
+                    >
+                      Change difficulty
+                    </button>
+                  </div>
                 </div>
               )
-            case 'START':
+            case 'DIFFICULTY':
               return (
                 <div className="flex-1 flex flex-col items-center justify-center animate-fade-in-up">
                   <h2 className="text-3xl font-semibold">Difficulty</h2>
@@ -88,6 +114,8 @@ export default function App () {
                   </div>
                 </div>
               )
+            default:
+              return null
           }
         })()}
       </div>

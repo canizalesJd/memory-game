@@ -9,8 +9,8 @@ const useGameState = (emojis) => {
   const [bestScore, setBestScore] = useState(0)
   const [emojiHistory, setEmojiHistory] = useState([])
   const [difficulty, setDifficulty] = useState('MEDIUM')
-  const emojisAmount = DIFFICULTY[difficulty]
-  const [currentMenu, setCurrentMenu] = useState('START')
+  const [emojisAmount, setEmojisAmount] = useState(DIFFICULTY[difficulty])
+  const [currentMenu, setCurrentMenu] = useState('DIFFICULTY')
 
   useEffect(() => {
     if (emojis && emojiList.length < emojisAmount) {
@@ -44,6 +44,7 @@ const useGameState = (emojis) => {
   }
 
   const handleCardClick = (id) => {
+    // reset game if the user clicked on the same emoji twice
     if (emojiHistory.includes(id)) {
       setScore(0)
       setCounter(0)
@@ -51,17 +52,22 @@ const useGameState = (emojis) => {
       getEmojiList()
       shuffleArray(emojiList)
       flipCards()
+      setCurrentMenu('GAME-OVER')
       return
     }
+    // increase score and add id to history
     setEmojiHistory((emojiHistory) => [...emojiHistory, id])
     setScore((score) => score + 1)
     setCounter((counter) => counter + 1)
+    // shuffle the list and flip cards
     shuffleArray(emojiList)
     flipCards()
   }
 
   const handleSelectDifficulty = (e) => {
-    setDifficulty(e.target.innerHTML.toUpperCase())
+    const difficulty = e.target.innerHTML.toUpperCase()
+    setDifficulty(difficulty)
+    setEmojisAmount(DIFFICULTY[difficulty])
     setCurrentMenu('GAME')
   }
 
@@ -77,6 +83,10 @@ const useGameState = (emojis) => {
     }, 600)
   }
 
+  const handleChangeMenu = (MENU) => {
+    setCurrentMenu(MENU)
+  }
+
   return {
     emojiList,
     score,
@@ -84,6 +94,7 @@ const useGameState = (emojis) => {
     emojiHistory,
     handleCardClick,
     handleSelectDifficulty,
+    handleChangeMenu,
     currentMenu
   }
 }
